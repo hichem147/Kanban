@@ -1,0 +1,141 @@
+        * {
+            box-sizing: border-box;
+            font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+        }
+
+        body {
+            background: #f4f5f7;
+            margin: 0;
+            padding: 20px;
+        }
+
+        h1 {
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+        }
+
+
+        .column-header {
+            font-weight: bold;
+            font-size: 1.1rem;
+            padding: 8px 0;
+            margin-bottom: 12px;
+            border-bottom: 2px solid rgba(0,0,0,0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .column-header span:first-child {
+            background: rgba(0,0,0,0.1);
+            padding: 2px 8px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+        }
+
+        .card {
+            background: white;
+            border-radius: 8px;
+            padding: 10px 12px;
+            margin-bottom: 10px;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+            cursor: grab;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: transform 0.1s, box-shadow 0.2s;
+        }
+
+        .card:active {
+            cursor: grabbing;
+        }
+
+        .card.dragging {
+            opacity: 0.4;
+            cursor: grabbing;
+        }
+
+        .card-text {
+            flex: 1;
+            word-break: break-word;
+        }
+
+        .delete-card {
+            background: none;
+            border: none;
+            font-size: 1.2rem;
+            cursor: pointer;
+            color: #999;
+            padding: 0 4px;
+            margin-left: 8px;
+            border-radius: 4px;
+        }
+
+        .delete-card:hover {
+            color: #e74c3c;
+            background: #f0f0f0;
+        }
+
+        .add-card input {
+            flex: 1;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            font-size: 0.9rem;
+        }
+
+        .add-card button {
+            background: #0052cc;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            padding: 8px 12px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .add-card button:hover {
+            background: #0747a6;
+        }
+
+        /* Indicateur de drop */
+        .drag-over {
+            background-color: #d0e2ff;
+        }
+
+
+
+
+
+        .kanban-board {
+    display: flex;
+    align-items: stretch;        /* Les colonnes prennent la même hauteur */
+    gap: 20px;
+    overflow-x: auto;
+    padding-bottom: 10px;
+}
+
+.column {
+    background: #ebecf0;
+    border-radius: 10px;
+    width: 300px;
+    min-width: 280px;
+    display: flex;
+    flex-direction: column;      /* Organisation verticale */
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+
+/* Le conteneur des cartes doit pouvoir s'étendre pour pousser le bouton vers le bas */
+.cards-container {
+    flex: 1;                     /* Prend tout l'espace disponible */
+    min-height: 300px;          /* Évite un effondrement si vide */
+    transition: background-color 0.2s;
+}
+
+/* Le formulaire d'ajout est poussé en bas automatiquement grâce au flex:1 du .cards-container */
+.add-card {
+    margin-top: auto;            /* Garde le formulaire tout en bas */
+    padding: 12px 0 0 0;
+    display: flex;
+    gap: 8px;
+}
