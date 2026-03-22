@@ -7,7 +7,13 @@
     <link rel="stylesheet" href="index.css">
 </head>
 <body>
-    <h1>📋 Kanban simple</h1>
+    <!-- Barre d'ajout globale (cachée par défaut) -->
+    <div id="global-add-bar" class="global-add-bar hidden">
+        <input type="text" id="new-task-input" placeholder="Nom de la tâche...">
+        <button id="confirm-add-btn">Ajouter</button>
+        <button id="close-add-bar-btn">✕</button>
+    </div>
+
     <div class="kanban-board" id="kanban-board"></div>
 
     <script src="index.js"></script>

@@ -3,11 +3,19 @@
             font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
         }
 
-        body {
-            background: #f4f5f7;
-            margin: 0;
-            padding: 20px;
-        }
+html, body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    overflow: hidden; /* Évite le scroll global si nécessaire */
+}
+
+
+body {
+    background: #f4f5f7;
+    font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+}
+
 
         h1 {
             font-size: 1.8rem;
@@ -15,23 +23,17 @@
         }
 
 
-        .column-header {
-            font-weight: bold;
-            font-size: 1.1rem;
-            padding: 8px 0;
-            margin-bottom: 12px;
-            border-bottom: 2px solid rgba(0,0,0,0.1);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
 
-        .column-header span:first-child {
-            background: rgba(0,0,0,0.1);
-            padding: 2px 8px;
-            border-radius: 20px;
-            font-size: 0.8rem;
-        }
+
+.column-header span:first-child,
+.column-header span:last-child {
+    background: rgba(0,0,0,0.1);
+    padding: 4px 8px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+}
+
+        /* */
 
         .card {
             background: white;
@@ -103,39 +105,138 @@
             background-color: #d0e2ff;
         }
 
-
-
-
-
-        .kanban-board {
+.kanban-board {
     display: flex;
-    align-items: stretch;        /* Les colonnes prennent la même hauteur */
+    align-items: stretch;      /* Colonnes de même hauteur */
     gap: 20px;
+    padding: 20px;
+    height: 100%;              /* Prend toute la hauteur du body */
     overflow-x: auto;
-    padding-bottom: 10px;
+    box-sizing: border-box;
 }
 
-.column {
+    .column {
     background: #ebecf0;
     border-radius: 10px;
-    width: 300px;
+    width: 500px;
     min-width: 280px;
     display: flex;
     flex-direction: column;      /* Organisation verticale */
     box-shadow: 0 1px 3px rgba(0,0,0,0.1);
-}
+    }
 
-/* Le conteneur des cartes doit pouvoir s'étendre pour pousser le bouton vers le bas */
 .cards-container {
-    flex: 1;                     /* Prend tout l'espace disponible */
-    min-height: 300px;          /* Évite un effondrement si vide */
+    flex: 1;                   /* Prend tout l'espace disponible entre l'en-tête et le bas */
+    min-height: 0;             /* Permet au flex de réduire si nécessaire */
+    overflow-y: auto;          /* Ajoute un scroll interne si trop de cartes */
+    padding: 8px;
     transition: background-color 0.2s;
 }
 
-/* Le formulaire d'ajout est poussé en bas automatiquement grâce au flex:1 du .cards-container */
 .add-card {
-    margin-top: auto;            /* Garde le formulaire tout en bas */
-    padding: 12px 0 0 0;
+    margin-top: auto;
+    padding: 12px;        /* même espacement que l'en-tête */
     display: flex;
     gap: 8px;
+    background: inherit;
+}
+
+    .column[data-column-id="todo"] {
+    background-color: #FEF3C7;
+    }
+    .column[data-column-id="inprogress"] {
+    background-color: #DBEAFE;
+    }
+    .column[data-column-id="done"] {
+    background-color: #D1FAE5;
+    }
+
+
+    /* Barre d'ajout globale */
+.global-add-bar {
+    position: fixed;
+    top: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: white;
+    padding: 12px 20px;
+    border-radius: 40px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    display: flex;
+    gap: 10px;
+    z-index: 1000;
+    border: 1px solid #ccc;
+}
+
+.global-add-bar.hidden {
+    display: none;
+}
+
+.global-add-bar input {
+    padding: 8px 12px;
+    border: 1px solid #ddd;
+    border-radius: 30px;
+    width: 250px;
+    font-size: 1rem;
+}
+
+.global-add-bar button {
+    background: #0052cc;
+    border: none;
+    color: white;
+    padding: 8px 16px;
+    border-radius: 30px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.global-add-bar button#close-add-bar-btn {
+    background: #e0e0e0;
+    color: #333;
+}
+
+.column-header {
+    font-weight: bold;
+    font-size: 1.1rem;
+    padding: 6px 6px 3px 6px;   /* haut, droite, bas, gauche */
+    border-bottom: 2px solid rgba(0,0,0,0.1);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+
+
+.column-header .title-section {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.column-header .title-section span:first-child {
+    background: rgba(0,0,0,0.1);
+    padding: 4px 8px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+}
+
+.add-task-btn {
+    background: none;
+    border: none;
+    font-size: 1.4rem;
+    font-weight: bold;
+    cursor: pointer;
+    color: #0052cc;
+    padding: 0 4px;
+    border-radius: 50%;
+    width: 28px;
+    height: 28px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.2s;
+}
+
+.add-task-btn:hover {
+    background: rgba(0,82,204,0.1);
 }
