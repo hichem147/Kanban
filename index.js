@@ -94,15 +94,62 @@ function createCardElement(text, columnId) {
         }
     });
 
+    // Édition par double-clic
+    textSpan.addEventListener('dblclick', (e) => {
+        e.stopPropagation();
+        const oldText = textSpan.textContent;
+        const input = document.createElement('input');
+        input.type = 'text';
+        input.value = oldText;
+        input.className = 'edit-card-input';
+        input.style.width = '100%';
+        input.style.padding = '4px';
+        input.style.fontSize = 'inherit';
+        
+        // Remplacer le span par l'input
+        textSpan.style.display = 'none';
+        card.insertBefore(input, textSpan.nextSibling);
+        input.focus();
+        
+        function finishEdit() {
+            const newText = input.value.trim();
+            if (newText && newText !== oldText) {
+                // Mettre à jour dans les données
+                const col = columnsData.find(c => c.id === columnId);
+                if (col) {
+                    const idx = col.cards.indexOf(oldText);
+                    if (idx !== -1) {
+                        col.cards[idx] = newText;
+                        textSpan.textContent = newText;
+                        card.setAttribute('data-card-text', newText);
+                        saveToLocalStorage();
+                    }
+                }
+            }
+            // Remettre le span et supprimer l'input
+            textSpan.style.display = '';
+            input.remove();
+        }
+        
+        input.addEventListener('blur', finishEdit);
+        input.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                finishEdit();
+            }
+        });
+    });
+
     card.appendChild(textSpan);
     card.appendChild(deleteBtn);
 
+    // Drag & drop (inchangé)
     card.addEventListener('dragstart', (e) => {
         e.dataTransfer.setData('text/plain', text);
         e.dataTransfer.effectAllowed = 'move';
         card.classList.add('dragging');
     });
-    card.addEventListener('dragend', (e) => {
+    card.addEventListener('dragend', () => {
         card.classList.remove('dragging');
     });
 
